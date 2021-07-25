@@ -14,6 +14,23 @@ class ContaCorrenteController {
 
     return res.json(contaCorrente)
   }
+
+  public async deposit (req: Request, res: Response) {
+    await ContaCorrente.findOneAndUpdate({ numero: req.body.numero }, { $inc: { saldo: req.body.valor } })
+      .then(updatedDocument => {
+        if (updatedDocument) {
+          console.log(`Successfully deposited: ${req.body.valor} at account: ${updatedDocument.numero}.`)
+          return res.status(200).json(updatedDocument)
+        } else {
+          console.log(`Deposit failed, account ${req.body.numero} not found.`)
+          return res.status(400).json({ error: 'Account not found.' })
+        }
+      })
+      .catch(err => {
+        console.error(`Failed to find and deposit: ${err}`)
+        return res.status(500).json({ error: 'Unexpected error.' })
+      })
+  }
 }
 
 export default new ContaCorrenteController()
