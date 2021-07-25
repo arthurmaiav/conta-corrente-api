@@ -2,6 +2,8 @@ import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
 
+import routes from './routes'
+
 class App {
     public express: express.Application
 
@@ -19,15 +21,14 @@ class App {
     }
 
     private database () {
-      mongoose.connect('mongodb://localhost:27017/tsnode', {
-        useNewUrlParser: true
-      })
+      const mongoAtlasUri = 'mongodb+srv://arthur:01021718@cluster0.yex18.mongodb.net/Cluster0?retryWrites=true&w=majority'
+      mongoose.connect(mongoAtlasUri, { useNewUrlParser: true, useUnifiedTopology: true },
+        () => console.log(' Mongoose is connected')
+      )
     }
 
     private routes () {
-      this.express.get('/', (req, res) => {
-        return res.send('Hello World')
-      })
+      this.express.use(routes)
     }
 }
 
