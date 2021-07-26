@@ -1,13 +1,13 @@
 import { Request, Response } from 'express'
 
-import ContaCorrente from '../schemas/ContaCorrente'
+import BankAccount from '../schemas/BankAccount'
 
-class ContaCorrenteController {
+class TransactionController {
   public async deposit (req: Request, res: Response) {
-    await ContaCorrente.findOneAndUpdate({ numero: req.body.numero }, { $inc: { saldo: req.body.valor } })
+    await BankAccount.findOneAndUpdate({ accountNumber: req.body.accountNumber }, { $inc: { balance: req.body.value } })
       .then(updatedDocument => {
         if (updatedDocument) {
-          console.log(`Successfully deposited: ${req.body.valor} at account: ${updatedDocument.numero}.`)
+          console.log(`Successfully deposited: ${req.body.valor} at account: ${updatedDocument.accountNumber}.`)
           return res.status(200).json(updatedDocument)
         } else {
           console.log(`Deposit failed, account ${req.body.numero} not found.`)
@@ -21,10 +21,10 @@ class ContaCorrenteController {
   }
 
   public async withdrawal (req: Request, res: Response) {
-    await ContaCorrente.findOneAndUpdate({ numero: req.body.numero }, { $inc: { saldo: -req.body.valor } })
+    await BankAccount.findOneAndUpdate({ accountNumber: req.body.accountNumber }, { $inc: { balance: -req.body.value } })
       .then(updatedDocument => {
         if (updatedDocument) {
-          console.log(`Successfully withdrew: ${req.body.valor} at account: ${updatedDocument.numero}.`)
+          console.log(`Successfully withdrew: ${req.body.valor} at account: ${updatedDocument.accountNumber}.`)
           return res.status(200).json(updatedDocument)
         } else {
           console.log(`Withdrawal failed, account ${req.body.numero} not found.`)
@@ -36,18 +36,6 @@ class ContaCorrenteController {
         return res.status(500).json({ error: 'Unexpected error.' })
       })
   }
-
-  public async list (req: Request, res: Response): Promise<Response> {
-    const contasCorrentes = await ContaCorrente.find()
-
-    return res.json(contasCorrentes)
-  }
-
-  public async create (req: Request, res: Response): Promise<Response> {
-    const contaCorrente = await ContaCorrente.create(req.body)
-
-    return res.json(contaCorrente)
-  }
 }
 
-export default new ContaCorrenteController()
+export default new TransactionController()
