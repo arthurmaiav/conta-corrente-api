@@ -1,12 +1,13 @@
 import { Request, Response } from 'express'
+import { TransactionModel } from '../../../shared/models/TransactionModel'
 
 import TransactionHistory from '../schemas/TransactionHistory'
 
 class TransactionHistoryController {
   public async listAll (req: Request, res: Response): Promise<Response> {
-    const historicoTransacao = await TransactionHistory.find()
+    const transactionHistory = await TransactionHistory.find()
 
-    return res.json(historicoTransacao)
+    return res.json(transactionHistory)
   }
 
   public async statement (req: Request, res: Response): Promise<Response> {
@@ -15,8 +16,8 @@ class TransactionHistoryController {
     return res.json(statement)
   }
 
-  public async save (req: Request): Promise<void> {
-    await TransactionHistory.create(req.body)
+  public async save (transaction: TransactionModel): Promise<void> {
+    await TransactionHistory.create(transaction)
   }
 }
 

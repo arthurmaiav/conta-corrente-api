@@ -2,7 +2,7 @@ import { Router } from 'express'
 
 import BankAccountController from './modules/account/controllers/BankAccountController'
 import TransactionController from './modules/account/controllers/TransactionController'
-import TransactionHistoryController from './modules/transaction/controllers/TransactionHistoryController'
+import TransactionHistoryController from './modules/transactionHistory/controllers/TransactionHistoryController'
 
 const routes = Router()
 
