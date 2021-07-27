@@ -11,6 +11,7 @@ routes.post('/contaCorrente', BankAccountController.create)
 
 routes.post('/depositar', TransactionController.deposit)
 routes.post('/sacar', TransactionController.withdrawal)
+routes.post('/pagar', TransactionController.payment)
 
 routes.get('/extrato', TransactionHistoryController.statement)
 
