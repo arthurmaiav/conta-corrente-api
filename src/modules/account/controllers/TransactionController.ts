@@ -41,6 +41,24 @@ class TransactionController {
         return res.status(500).json({ error: `Unexpected error: ${err}` })
       })
   }
+
+  public async payment (req: Request, res: Response) {
+    await BankAccount.findOneAndUpdate({ accountNumber: req.body.accountNumber }, { $inc: { balance: -req.body.value } })
+      .then(updatedDocument => {
+        if (updatedDocument) {
+          console.log(`Successfully paid: ${req.body.valor}, account: ${updatedDocument.accountNumber}.`)
+          TransactionHistoryController.save(new TransactionModel(req.body.accountNumber, req.body.value, TransactionTypeEnum.PAYMENT))
+          return res.status(200).json(updatedDocument)
+        } else {
+          console.log(`Payment failed, account ${req.body.numero} not found.`)
+          return res.status(404).json({ error: 'Account not found.' })
+        }
+      })
+      .catch(err => {
+        console.error(`Failed to pay: ${err}`)
+        return res.status(500).json({ error: `Unexpected error: ${err}` })
+      })
+  }
 }
 
 export default new TransactionController()
