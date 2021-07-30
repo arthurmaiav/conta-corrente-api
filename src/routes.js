@@ -6,6 +6,7 @@ import TransactionHistoryController from './modules/transactionHistory/controlle
 
 const routes = Router()
 
+routes.get('/contaCorrente/:numeroConta', BankAccountController.listOne)
 routes.get('/contasCorrente', BankAccountController.listAll)
 routes.post('/contaCorrente', BankAccountController.create)
 

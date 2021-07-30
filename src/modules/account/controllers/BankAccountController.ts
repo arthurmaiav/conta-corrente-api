@@ -4,6 +4,12 @@ import AccountYieldJob from '../job/AccountYieldJob'
 import BankAccount from '../schemas/BankAccount'
 
 class BankAccountController {
+  public async listOne (req: Request, res: Response): Promise<Response> {
+    const account = await BankAccount.findOne({ accountNumber: Number(req.params.numeroConta) })
+
+    return res.json(account)
+  }
+
   public async listAll (req: Request, res: Response): Promise<Response> {
     const bankAccounts = await BankAccount.find()
 
