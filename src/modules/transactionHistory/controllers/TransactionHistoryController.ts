@@ -11,7 +11,7 @@ class TransactionHistoryController {
   }
 
   public async statement (req: Request, res: Response): Promise<Response> {
-    const statement = await TransactionHistory.find({ accountNumber: Number(req.params.numeroConta) })
+    const statement = await TransactionHistory.find({ accountNumber: Number(req.params.numeroConta) }).sort({ createdAt: -1 })
 
     return res.json(statement)
   }
