@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 export enum TransactionTypeEnum {
-    DEPOSIT = 'DEPOSIT',
-    WITHDRAWAL = 'WITHDRAWAL',
-    PAYMENT = 'PAYMENT'
+    DEPOSIT = 'Depósito',
+    WITHDRAWAL = 'Saque',
+    PAYMENT = 'Pagamento'
   }
