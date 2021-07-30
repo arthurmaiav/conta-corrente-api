@@ -10,7 +10,7 @@ class TransactionController {
     await BankAccount.findOneAndUpdate({ accountNumber: req.body.accountNumber }, { $inc: { balance: req.body.value } })
       .then(updatedDocument => {
         if (updatedDocument) {
-          console.log(`Successfully deposited: ${req.body.valor} at account: ${updatedDocument.accountNumber}.`)
+          console.log(`Successfully deposited: ${req.body.value} at account: ${updatedDocument.accountNumber}.`)
           TransactionHistoryController.save(new TransactionModel(req.body.accountNumber, req.body.value, TransactionTypeEnum.DEPOSIT))
           return res.status(200).json(updatedDocument)
         } else {
@@ -28,7 +28,7 @@ class TransactionController {
     await BankAccount.findOneAndUpdate({ accountNumber: req.body.accountNumber }, { $inc: { balance: -req.body.value } })
       .then(updatedDocument => {
         if (updatedDocument) {
-          console.log(`Successfully withdrew: ${req.body.valor} at account: ${updatedDocument.accountNumber}.`)
+          console.log(`Successfully withdrew: ${req.body.value} at account: ${updatedDocument.accountNumber}.`)
           TransactionHistoryController.save(new TransactionModel(req.body.accountNumber, req.body.value, TransactionTypeEnum.WITHDRAWAL))
           return res.status(200).json(updatedDocument)
         } else {
@@ -46,7 +46,7 @@ class TransactionController {
     await BankAccount.findOneAndUpdate({ accountNumber: req.body.accountNumber }, { $inc: { balance: -req.body.value } })
       .then(updatedDocument => {
         if (updatedDocument) {
-          console.log(`Successfully paid: ${req.body.valor}, account: ${updatedDocument.accountNumber}.`)
+          console.log(`Successfully paid: ${req.body.value}, account: ${updatedDocument.accountNumber}.`)
           TransactionHistoryController.save(new TransactionModel(req.body.accountNumber, req.body.value, TransactionTypeEnum.PAYMENT))
           return res.status(200).json(updatedDocument)
         } else {
