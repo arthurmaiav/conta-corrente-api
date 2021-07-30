@@ -11,7 +11,7 @@ class TransactionHistoryController {
   }
 
   public async statement (req: Request, res: Response): Promise<Response> {
-    const statement = await TransactionHistory.find({ accountNumber: req.body.accountNumber })
+    const statement = await TransactionHistory.find({ accountNumber: Number(req.params.numeroConta) })
 
     return res.json(statement)
   }
